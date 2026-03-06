@@ -1,0 +1,25 @@
+//set height and width of canvas = window
+let wHeight = window.innerHeight;
+let wWidth = window.innerWidth;
+const canvas = document.getElementById("the-canvas");
+const context = canvas.getContext("2d");
+canvas.height = wHeight;
+canvas.width = wWidth;
+const player = {} //this will be all things 'this' player
+
+//put the modals into variables so we can interact with them.
+const loginModal = new bootstrap.Modal(document.querySelector('#loginModal'));
+const spawnModal = new bootstrap.Modal(document.querySelector('#spawnModal'));
+
+window.addEventListener('load', () => {
+    //on page load, opne the login modal
+    loginModal.show();
+})
+
+document.querySelector('.name-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    player.name = document.querySelector('#name-input').value;
+    console.log(player);
+    loginModal.hide();
+    spawnModal.show();
+})
