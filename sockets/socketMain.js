@@ -22,13 +22,26 @@ const settings = {
 }
 
 const players = []
+let ticktockinterval
 
 //on server start, to make out initial 500
 initGame()
 
+
+
 io.on('connect', (socket)=> {
 
     socket.on('init', (playerObject, ackCallback) => {
+
+        //tick-tock - issue an event to every connected socket that is playing the game, 30 times per second
+        if(players.length === 0){ // someone is about to be added to players Start TickTocking
+            ticktockinterval = setInterval(() => {
+            io.to('game').emit('tick', players) // send the event to the "game" room
+
+            }, 33)//1000/30 = 33.33333 1/30th of a second
+        }
+
+        socket.join('game'); // add this socket to game room
         //a player has connected
         const playerName = playerObject.playerName
         //make a playerConfig object - data specific to player that only the player needs to know
@@ -39,7 +52,17 @@ io.on('connect', (socket)=> {
         const player = new Player(socket.id, playerConfig, playerData)
         players.push(player)
     
-        ackCallback(orbs) // send the orbs array back as an acknowledgement
+        ackCallback({ orbs }) // send the orbs array back as an acknowledgement
+    })
+    socket.on('disconnect', () => {
+        // remove the disconnected player from the array first
+        const index = players.findIndex(p => p.id === socket.id)
+        if (index !== -1) players.splice(index, 1)
+
+        // if no players left, stop ticking
+        if(players.length === 0){
+            clearInterval(ticktockinterval)
+        }
     })
 })
 

@@ -1,8 +1,8 @@
 class PlayerData {
-    constructor(playerName, orbs, settings){
+    constructor(playerName, settings){
         this.name = playerName
-        this.locX = Math.floor(Math.random() + 10 * settings.worldWidth)
-        this.locY = Math.floor(Math.random() + 10 * settings.worldHeight)
+        this.locX = Math.floor(Math.random() * settings.worldWidth) + 10
+        this.locY = Math.floor(Math.random() * settings.worldHeight) + 10
         this.radius = settings.defaultSize
         this.color = this.getRandomColor()
         this.score = 0

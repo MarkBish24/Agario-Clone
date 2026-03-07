@@ -12,7 +12,8 @@ const init = async () => {
     draw() // draw function is in canvas stuff
 }
 
-socket.on('initReturn', (initData) => {
-    console.log(initData)
-    orbs = initData.orbs
+socket.on('tick', (players) => {
+    console.log(players)
 })
+
+init()
