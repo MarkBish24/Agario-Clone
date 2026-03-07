@@ -12,8 +12,9 @@ const init = async () => {
     draw() // draw function is in canvas stuff
 }
 
-socket.on('tick', (players) => {
+socket.on('tick', (playersArray) => {
     console.log(players)
+    players = playersArray;
 })
 
 init()

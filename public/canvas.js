@@ -15,16 +15,20 @@ const draw = () => {
     const camY = -player.locY + canvas.height / 2
     context.translate(camX, camY)
 
-    context.beginPath()
-    context.fillStyle = 'rgb(255,0,0)'
-    context.arc(player.locX,player.locY, 10, 0, 2 * Math.PI)//
-    //arg1 and arg2 are center x and center y of the arc
-    //arg3 radius of the circle
-    context.fill()
-    context.lineWidth = 3; // how wide to draw a line in pixels
-    context.strokeStyle = 'rgb(0,255,0)'
-    context.stroke()
+    //draw all the players
+    players.forEach(p => {
+        context.beginPath()
+        context.fillStyle = p.playerData.color;
+        context.arc(p.playerData.locX,p.playerData.locY, p.playerData.radius, 0, 2 * Math.PI)//
+        //arg1 and arg2 are center x and center y of the arc
+        //arg3 radius of the circle
+        context.fill()
+        context.lineWidth = 3; // how wide to draw a line in pixels
+        context.strokeStyle = 'rgb(0,255,0)'
+        context.stroke()
+    })
 
+    //draw all the orbs
     orbs.forEach(orb=> {
         context.beginPath();
         context.fillStyle = orb.color
