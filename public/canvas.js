@@ -20,19 +20,24 @@ const draw = () => {
     context.beginPath()
     context.fillStyle = 'rgb(255,0,0)'
     context.arc(player.locX,player.locY, 10, 0, 2 * Math.PI)//
-    context.arc(100,100, 10, 0, 2 * Math.PI)//
     //arg1 and arg2 are center x and center y of the arc
     //arg3 radius of the circle
     context.fill()
     context.lineWidth = 3; // how wide to draw a line in pixels
     context.strokeStyle = 'rgb(0,255,0)'
     context.stroke()
+
+    orbs.forEach(orb=> {
+        context.beginPath();
+        context.fillStyle = orb.color
+        context.arc(orb.locX, orb.locY,orb.radius,0,Math.PI*2)
+        context.fill();
+    })
     requestAnimationFrame(draw) // request animation frame is like a controlled loop
 
 }
 
 canvas.addEventListener('mousemove',(event)=>{
-    console.log(event)
     const mousePosition = {
         x: event.clientX,
         y: event.clientY
