@@ -33,5 +33,5 @@ document.querySelector('.start-game').addEventListener('click', (e) => {
     elArray.forEach((el) => {
         el.removeAttribute('hidden');
     })
-    init();
+    init() //init is inside of socketstuff.js
 })

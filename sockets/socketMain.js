@@ -21,26 +21,25 @@ const settings = {
 
 }
 
+const players = []
+
 //on server start, to make out initial 500
 initGame()
 
 io.on('connect', (socket)=> {
-    // a player has connected
-    const playerName = 'Rob'
-    //make a playerConfig object - data specific to player that only the player needs to know
-    const playerConfig = new PlayerConfig(settings)
-    //make a playerData object - data that everyone needs to know
-    const playerData = new PlayerData(playerName, settings)
-    //a master player object to house both
-    const player = new Player(socket.id, playerConfig, playerData)
-    
-    socket.emit('init', {
+
+    socket.on('init', (playerObject, ackCallback) => {
+        //a player has connected
+        const playerName = playerObject.playerName
         //make a playerConfig object - data specific to player that only the player needs to know
-
+        const playerConfig = new PlayerConfig(settings)
         //make a playerData object - data that everyone needs to know
-
+        const playerData = new PlayerData(playerName, settings)
         //a master player object to house both
-        orbs
+        const player = new Player(socket.id, playerConfig, playerData)
+        players.push(player)
+    
+        ackCallback(orbs) // send the orbs array back as an acknowledgement
     })
 })
 
